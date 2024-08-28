@@ -1,7 +1,4 @@
-import Head from "next/head";
-import { useState } from "react";
-import styles from "../styles/Home.module.css";
-import { Home } from "./components/home/home.component";
+import { Home } from "../templates/components/home/home.template";
 
 export default function Index() {
   return <Home />;
