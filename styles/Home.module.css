@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .footer {
@@ -183,5 +184,5 @@
 .error {
   font-weight: 300;
   color: #fb3640;
-font-size: 22px
+  font-size: 22px;
 }
