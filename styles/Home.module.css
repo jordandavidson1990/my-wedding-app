@@ -181,6 +181,7 @@
 }
 
 .error {
-  font-weight: 600;
+  font-weight: 300;
   color: #fb3640;
+font-size: 22px
 }

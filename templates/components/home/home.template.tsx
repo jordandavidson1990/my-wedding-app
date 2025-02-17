@@ -1,39 +1,47 @@
 import Head from "next/head";
-import React from "react";
 import styles from "../../../styles/Home.module.css";
-import { useHome } from "./home.hook";
+import { FC } from "react";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from "react-hook-form";
 
-export const Home = () => {
-  const { code, setCode, handleSubmit, errors, register, validateCode } =
-    useHome();
+type Props = {
+  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  errors: FieldErrors<FieldValues>;
+  register: UseFormRegister<FieldValues>;
+  validateCode: (data: string) => boolean;
+  onSubmit: () => void;
+};
 
+export const Home: FC<Props> = ({
+  handleSubmit,
+  errors,
+  register,
+  validateCode,
+  onSubmit,
+}) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Jordan & Gina | Wedding</title>
-        <meta name="description" content="Wee " />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to the party</h1>
-
-        <p className={styles.description}>Coming soon</p>
-        {/* {errors && <p className={styles.error}>{errors}</p>} */}
-        <input
-          className={styles.input}
-          placeholder="Enter your code..."
-          value={code}
-          {...register("code", {
-            required: "Please enter your code",
-            validate: validateCode,
-          })}
-          onChange={(e) => setCode(e.target.value.toUpperCase())}
-        />
-        <button className={styles.button} onClick={handleSubmit}>
-          Enter
-        </button>
-      </main>
-    </div>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.main}>
+      <p className={styles.title}>Welcome to the party</p>
+      <p className={styles.description}>Coming soon</p>
+      {errors?.code && (
+        <p className={styles.error}>{errors.code.message as string}</p>
+      )}
+      <input
+        className={styles.input}
+        placeholder="Enter your code..."
+        {...register("code", {
+          required: "Please enter your code",
+          validate: (e) => validateCode(e) || "Invalid code",
+        })}
+        autoComplete="off"
+      />
+      <button className={styles.button} type="submit">
+        Enter
+      </button>
+    </form>
   );
 };
